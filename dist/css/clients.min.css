@@ -1,0 +1,29 @@
+
+#slider-img{
+	padding-bottom: 40px;
+	
+}
+.imgDescription {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(29, 106, 154, 0.72);
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+}
+.img-circle:hover .imgDescription {
+  visibility: visible;
+  opacity: 1;
+}
+#slider-img:hover {
+	opacity: 0.5;
+	visibility: visible;
+    filter: alpha(opacity=50); 
+}
+#edit-button{
+	height:120px;
+	width:120px;
+}

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8">
+	  <title>Trainers</title>
+	  <!-- Tell the browser to be responsive to screen width -->
+	  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	  <!-- Bootstrap 3.3.6 -->
+	  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	  <!-- Font Awesome -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+	  <!-- Ionicons -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	  <!-- Theme style -->
+	  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+	  <link rel="stylesheet" href="dist/css/skin-blue.min.css">
+	  <link rel="stylesheet" href="dist/css/Dashboard.min.css">
+	  <link rel="stylesheet" href="dist/css/clients.min.css">
+
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+
+      <script type="text/javascript">
+			window.onload = function () {
+			  var chart = new CanvasJS.Chart("progress",{
+				  title: {
+					text: "Month"
+				  },
+				  axisX: {
+					minimum: 0,
+					maximum: 12
+				  },
+				  axisY: {
+					title: "Number of Kilometers",
+				  },
+				  data: [
+				  {
+					type: "spline",
+					dataPoints: [
+						{ x: 1, y: 10 },
+						{ x: 2, y: 12},
+						{ x: 3, y: 15 },
+						{ x: 4, y: 23 },
+						{ x: 5, y: 26 },
+						{ x: 6, y: 29 },
+						{ x: 7, y: 35 },
+						{ x: 8, y: 40 },
+						{ x: 9, y: 43 },
+						{ x: 10, y: 46 },
+						{ x: 11, y: 50 },
+						{ x: 12, y: 55 }
+					  ]
+					}					
+				  ]
+				});
+				chart.render();
+				
+
+			}
+		$(document).ready(function(){
+			$(".js-ajax-php-json").submit(function(e){
+					//alert("Form check");
+					var data = {
+					  "action": "addmeasurement"
+					};
+					data = $(this).serialize() + "&" + $.param(data);
+					$.ajax({
+					  type: "POST",
+					  dataType: "json",
+					  url: "mysql/addmeasurement.php", 
+					  data: data,
+					  success: function(result) {
+						//alert("Form submitted successfully.\nReturned json: " + result["json"]);
+												alert("Form submitted successfully.");
+												$('#measurementstable').prepend('<tr><td>'+result["new_date"]+'</td><td>'+result["bmi"]+'</td><td>'+result["fat_persentege"] + "%"+'</td><td>'+result["weight"]+'</td></tr>');
+                                                $('#measurementstable tr:last').remove();
+					  },
+                      error: function(xhr, textStatus, error){
+												console.log(xhr.statusText);           /// debug
+                                                console.log(textStatus);               /// debug
+                                                console.log(error);                    /// debug
+                                                console.warn(xhr.responseText);        /// debug
+                                          }
+					});
+					e.preventDefault();						
+					$('#addmeasurementform').modal('hide');
+					return false;			
+			});
+		});
+      </script>
+		
+	</head>
+<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+	`		<!-- Main Header -->
+			<header class="main-header" >
+				<!-- Logo -->
+				<a href="#" class="logo">
+					<!-- mini logo for sidebar mini 50x50 pixels -->
+					<span class="logo-mini"><img id="logo" src="dist/img/logo.png"></span>
+				    <!-- logo for regular state and mobile devices -->
+					<span class="logo-lg"><img id="logo" src="dist/img/logo.png">Trainers</span>  
+				</a>
+				<!-- Header Navbar -->
+				<nav class="navbar navbar-static-top" role="navigation">
+				  <!-- Sidebar toggle button-->
+				  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+					<span class="sr-only">Toggle navigation</span>
+				  </a>
+				  <!-- Navbar Right Menu -->
+				  <div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+					  <li class="dropdown messages-menu">
+						<!-- Menu toggle button -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						  <i class="fa fa-envelope-o"></i>
+						  <span class="label label-success">4</span>
+						</a>
+						<ul class="dropdown-menu">
+						  <li class="header">You have 4 messages</li>
+						  <li>
+							<!-- inner menu: contains the messages -->
+							<ul class="menu">
+							  <li><!-- start message -->
+								<a href="#">
+								  <div class="pull-left">
+									<!-- User Image -->	
+									<img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+								  </div>
+								  <!-- Message title and timestamp -->
+								  <h4>
+									Tania Savelia
+									<small><i class="fa fa-clock-o"></i> 5 mins</small>
+								  </h4>
+								  <!-- The message -->
+								  <p>Can you help me with the training plan?</p>
+								</a>
+							  </li>
+							  <!-- end message -->
+							</ul>
+							<!-- /.menu -->
+						  </li>
+						  <li class="footer"><a href="#">See All Messages</a></li>
+						</ul>
+					  </li>
+					  <!-- /.messages-menu -->
+					  <!-- Notifications Menu -->
+					  <li class="dropdown notifications-menu">
+						<!-- Menu toggle button -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						  <i class="fa fa-bell-o"></i>
+						  <span class="label label-warning">10</span>
+						</a>
+						<ul class="dropdown-menu">
+						  <li class="header">You have 10 notifications</li>
+						  <li>
+							<!-- Inner Menu: contains the notifications -->
+							<ul class="menu">
+							  <li><!-- start notification -->
+								<a href="#">
+								  <i class="fa fa-users text-aqua"></i> 7PM workout with Julie
+								</a>
+							  </li>
+							  <!-- end notification -->
+							</ul>
+						  </li>
+						  <li class="footer"><a href="#">View all</a></li>
+						</ul>
+					  </li>
+					  <!-- Tasks Menu -->
+					  <li class="dropdown tasks-menu">
+						<!-- Menu Toggle Button -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						  <i class="fa fa-flag-o"></i>
+						  <span class="label label-danger">9</span>
+						</a>
+						<ul class="dropdown-menu">
+						  <li class="header">You have 9 tasks</li>
+						  <li>
+							<!-- Inner menu: contains the tasks -->
+							<ul class="menu">
+							  <li><!-- Task item -->
+								<a href="#">
+								  <!-- Task title and progress text -->
+								  <h3>
+									Create new workout plans for February
+								  </h3>
+								  <!-- The progress bar -->
+								  <div class="progress xs">
+									<!-- Change the css width attribute to simulate progress -->
+									<div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+									  <span class="sr-only">20% Complete</span>
+									</div>
+								  </div>
+								</a>
+							  </li>
+							  <!-- end task item -->
+							</ul>
+						  </li>
+						  <li class="footer">
+							<a href="#">View all tasks</a>
+						  </li>
+						</ul>
+					  </li>
+					  <!-- User Account Menu -->
+					  <li class="dropdown user user-menu">
+						<!-- Menu Toggle Button -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						  <!-- The user image in the navbar-->
+						  <img src="dist/img/user2-160x120.png" class="user-image" alt="User Image">
+						  <!-- hidden-xs hides the username on small devices so only the image appears. -->
+						  <span class="hidden-xs">Brandon Carter</span>
+						</a>
+						<ul class="dropdown-menu">
+						  <!-- The user image in the menu -->
+						  <li class="user-header">
+							<img src="dist/img/user2-160x120.png" class="img-circle" alt="User Image">
+							<p>
+							  Brandon Carter - Personal Trainer
+							  <small>Member since Nov. 2016</small>
+							</p>
+						  </li>
+						  <!-- Menu Body -->
+						  <li class="user-body">
+							 <div class="pull-left">
+							  <a href="#" class="btn btn-default btn-flat">Profile</a>
+							</div>
+							<div class="pull-right">
+							  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+							</div>
+						  </li>  
+						</ul>
+					  </li>
+					</ul>
+				  </div>
+				</nav>
+			</header>
+			  <!-- Left side column. contains the logo and sidebar -->
+			  <aside class="main-sidebar">
+				<section class="sidebar">
+				  <!-- Sidebar Menu -->
+				  <ul class="sidebar-menu">
+					<li class="header"></li>
+					<li><a href="dashboard.html"><i class="fa fa-home"></i> <span>OverView</span></a></li>
+					<li class="active"><a href="clients.html"><i class="fa fa-user"></i> <span>Clients</span></a></li>
+					<li><a href="#"><i class="fa fa-users"></i> <span>Teams</span></a></li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> <span>Workout Templates</span></a></li>
+					<li><a href="#"><i class="fa fa-cutlery"></i> <span>Diets</span></a></li>
+					<li><a href="#"><i class="fa fa-usd"></i> <span>Cash Flow</span></a></li> 
+				  </ul>
+				  <!-- /.sidebar-menu -->
+				</section>
+				<!-- /.sidebar -->
+			  </aside>
+			<!-- Content Wrapper. Contains page content -->	
+			<div class="content-wrapper">
+				<!-- Content Header (Dashboard) -->
+				<section class="content-header">
+				  <h1>
+					Clients
+				  </h1>
+				</section>
+			<!-- Main content -->
+				<section class="content">
+				  <div class="row">
+					<!-- col -->
+					<div class="col-md-12">
+					  <div class="row">
+					  	<!-- nested col -->
+						<div class="col-lg-12 col-xs-6">
+					
+						<div class="box">
+						<!-- /.box-header -->
+						<div class="box-body">  
+						<div class="row invoice-info">
+							<div class="col-sm-3 invoice-col">			  
+							  <address>
+							        <img src="dist/img/avatar.png" class="img-circle" id="user" alt="User Image" style="height:128px; width:128px;">
+							  </address>
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 invoice-col">	  
+							  <address>
+								<strong>Philip Cohen</strong><br>
+								795 Folsom Ave, Suite 600<br>
+								San Francisco, CA 94107<br>
+								Phone: (804) 123-5432<br>
+								Email: info@almasaeedstudio.com
+							  </address>
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 invoice-col">
+							   <b>Body Tatgets</b><br>
+							   <br>
+								<b>Bmi</b> : 18 in 4 month<br>
+								<b>Fat %</b> : 18% in 4 month<br>
+								<b>Weight (kg)</b> : 55 in 4 month<br>
+								<br>
+							    <div class="progress">
+									<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+									  30% Complete 
+									</div>
+								</div>
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-3 invoice-col">
+							  <b>Personal Goals</b><br>
+							  <br>
+							   4 workouts per week<br>
+							  <b>Km per week:</b> 20 KM<br>
+							  <b>Time per K.m</b> 5 MINUTS.<br>
+							  <br>
+							    <div class="progress">
+									<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+									  40% Complete 
+									</div>
+								</div>
+							</div>
+							<!-- /.col -->
+						  </div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+						</div>
+				<!-- ./col -->
+				<div class="col-md-4">
+						  <div class="box">
+						  <div class="box-header with-border">
+							  <h3 class="box-title">weekly measurement </h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">  
+						<table class="table table-hover" id="measurementstable">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Bmi</th>
+									<th>Fat %</th>	
+									<th>Weight <small>(kg)</small></th>
+								</tr>
+							</thead>
+								<tbody>
+								<!-- Single event in a single day -->
+									<tr>
+										<td class="agenda-date" class="active" rowspan="1">
+											<div class="shortdate text-muted">2017-01-05</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												28.9
+											</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												27.5%
+											</div>										
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												78
+											</div>
+										</td>										
+									</tr>
+									<!-- Single event in a single day -->
+									<tr>
+										<td class="agenda-date" class="active" rowspan="1">
+                                                                                     <div class="shortdate text-muted">2017-01-12</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												28.9
+											</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												27.5%
+											</div>										
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												78
+											</div>
+										</td>		
+									</tr>
+									<!-- Single event in a single day -->
+									<tr>
+										<td class="agenda-date" class="active" rowspan="1">
+											
+											<div class="shortdate text-muted">2017-01-18</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												28.9
+											</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												27.5%
+											</div>										
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												78
+											</div>
+										</td>			
+									</tr>	
+									<!-- Single event in a single day -->
+									<tr>
+										<td class="agenda-date" class="active" rowspan="1">
+											
+											<div class="shortdate text-muted">2017-01-18</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												28.9
+											</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												27.5%
+											</div>										
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												78
+											</div>
+										</td>			
+									</tr>	
+									<!-- Single event in a single day -->
+									<tr>
+										<td class="agenda-date" class="active" rowspan="1">
+											
+											<div class="shortdate text-muted">2017-01-18</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												28.9
+											</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												27.5%
+											</div>										
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												78
+											</div>
+										</td>			
+									</tr>	
+									<!-- Single event in a single day -->
+									<tr>
+										<td class="agenda-date" class="active" rowspan="1">
+											
+											<div class="shortdate text-muted">2017-01-18</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												28.9
+											</div>
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												27.5%
+											</div>										
+										</td>
+										<td class="agenda-address">
+											<div class="agenda-event">
+												78
+											</div>
+										</td>			
+									</tr>	
+									<!-- Modal -->
+									  <div class="modal fade" id="seereport" role="dialog">
+										<div class="modal-dialog">
+										
+										  <!-- Modal content-->
+										  <div class="modal-content">
+										 <div class="modal-header">
+											<h5 class="modal-title">Report</h5>
+										  </div>
+										  <div class="modal-body">
+											<p>I just decided to run a 5k.</p>	
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-primary " data-dismiss="modal">Send</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											</div>
+										  </div>
+										</div>
+									  </div>
+						<!-- Modal -->
+						<div class="modal fade" id="addmeasurementform" role="dialog">
+							<div class="modal-dialog modal-sm">				
+							<!-- Modal content-->
+								<div class="modal-content">
+								 <div class="modal-header">
+									<h3 class="modal-title">New Measurement</h3>
+								 </div>
+					    	     <div class="modal-body">
+									<form action="test" class="js-ajax-php-json" method="post" accept-charset="utf-8" >	
+										<div class="form-group">
+											<label>BMI: </label><input type="number" name="bmi" class="form-control" name="text:" maxlength="20" placeholder="Enter ..."> 
+										</div>
+										<div class="form-group">
+											<label>Fat %: </label><input type="number" name="fat_persentege" class="form-control" name="text:" maxlength="20" placeholder="Enter ..."> %.
+										</div>
+										<div class="form-group">
+											<label>Weight: </label><input type="number" name="weight" class="form-control" name="text:" maxlength="20" placeholder="Enter ..."> Kg.
+										</div>
+										<div class="form-group">
+											<label>Date :</label>
+											<div class="input-group date">
+											  <div class="input-group-addon">
+												<i class="fa fa-calendar"></i>
+											  </div>
+											  <input type="date" name="new_date" class="form-control pull-left" id="datepicker">
+											</div>
+										</div>
+										<div class="form-group">
+											<input type="submit" class="btn btn-primary  " value="Add" name="submit" />
+											<button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+										</div>
+									</form>	
+								 </div>
+								</div>
+							</div>
+						</div>
+								</tbody>		
+						</table>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer clearfix">
+							<ul class="pagination pagination-sm no-margin pull-left">
+								<li><a data-toggle="modal" data-target="#addmeasurementform">Update measurements</a></li>
+							</ul>
+							<ul class="pagination pagination-sm no-margin pull-right">
+								<li><a href="#">&laquo;</a></li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">&raquo;</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+					<div class="col-md-5">
+					  <div class="box">
+						  <div class="box-header with-border">
+							  <h3 class="box-title">Monthly progress</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">  
+							<div id="progress" style="height: 319px; width: 100%;"></div>
+						<!-- /.box-body -->
+					 </div>
+				   </div>
+				   </div>
+				<!-- ./col -->
+					<!-- ./col -->
+				<div class="col-md-3">
+						  <div class="box">
+						  <div class="box-header with-border">
+							  <h3 class="box-title">Workout Plan</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">  
+							<div class="btn-group-vertical middle">
+							  <button type="button" class="btn btn-success">Update workout</button>
+							  <button type="button" class="btn btn-success">View workout</button>
+							</div>
+						</div>
+					</div>
+				   </div>
+				 </div>
+				</div>
+				</div>
+				 <!-- /.row (main row) -->
+		        <!-- /.section -->	
+				</section>
+			</div>
+		</div>
+	  <!-- /.content-wrapper -->
+	  <!-- Main Footer -->
+	  <footer class="main-footer">
+		<!-- Default to the left -->
+		<strong>Copyright &copy; 2017 <a href="#">Trainers</a>.</strong> All rights reserved.
+	  </footer>
+	<!-- jQuery 2.2.3 -->
+	<!--<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>-->
+	<!--<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+	<!-- Bootstrap 3.3.6 -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="dist/js/app.min.js"></script>
+	<!-- canvasjs -->
+	<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<!--slick-->
+	<!--<script type="text/javascript" src="plugins/slick/slick/slick.min.js"></script>-->
+</body>
+</html>

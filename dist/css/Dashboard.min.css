@@ -1,0 +1,45 @@
+#logo {
+	height: 25px;
+}
+
+#user {
+	height:35px;
+	width:35px;
+}
+.box h2 upcominge-events{
+	padding: 0px 0px 0px 10px; 
+	margin: 0px 0px 0px 10px; 
+
+}
+.agenda {  }
+
+/* Dates */
+.agenda .agenda-date { width: 170px; }
+.agenda .agenda-date .dayofmonth {
+  width: 40px;
+  font-size: 36px;
+  line-height: 36px;
+  float: left;
+  text-align: right;
+  margin-right: 10px; 
+}
+.agenda .agenda-date .shortdate {
+  font-size: 0.75em; 
+}
+/* Times */
+.agenda .agenda-time { width: 140px; } 
+/* Address */
+.agenda .agenda-address { width: 140px; } 
+/* client */
+.agenda .agenda-client { width: 40px; } 
+/* Events */
+.agenda .agenda-events {  } 
+.agenda .agenda-events .agenda-event {  } 
+
+@media (max-width: 767px) {
+    
+}
+.table-style .today {background: #2A3F54; color: #ffffff;}
+.table-style th:nth-of-type(7),td:nth-of-type(7) {color: blue;}
+.table-style th:nth-of-type(1),td:nth-of-type(1) {color: red;}
+.table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
